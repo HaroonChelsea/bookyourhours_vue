@@ -1,5 +1,6 @@
 <template>
   <fragment>
+    <Navbar />
     <!-- Titlebar
 ================================================== -->
     <div id="titlebar" class="gradient">
@@ -32,16 +33,21 @@
     <!-- Spacer -->
     <div class="margin-top-70"></div>
     <!-- Spacer / End-->
+    <Footer />
   </fragment>
 </template>
-
 <script>
 import RegisterForm from "@/components/RegisterForm";
 import { Fragment } from "vue-fragment";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+
 export default {
   name: "Register",
   components: {
     Fragment,
+    Navbar,
+    Footer,
     RegisterForm,
   },
 };

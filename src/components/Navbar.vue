@@ -10,7 +10,7 @@
           <div class="left-side">
             <!-- Logo -->
             <div id="logo">
-              <router-link to="/"
+              <router-link exact to="/"
                 ><img src="/assets/images/logo.png" alt=""
               /></router-link>
             </div>
@@ -19,7 +19,7 @@
             <nav id="navigation">
               <ul id="responsive">
                 <li>
-                  <router-link to="/" class="current">Home</router-link>
+                  <router-link exact to="/" class="">Home</router-link>
                 </li>
 
                 <li>
@@ -37,12 +37,6 @@
                 <li>
                   <a href="#">Pages</a>
                 </li>
-                <li>
-                  <router-link to="/login">Login</router-link>
-                </li>
-                <li>
-                  <router-link to="/register">register</router-link>
-                </li>
               </ul>
             </nav>
             <div class="clearfix" />
@@ -50,7 +44,7 @@
           </div>
           <!-- Left Side Content / End -->
           <!-- Right Side Content / End -->
-          <div class="right-side">
+          <div v-if="loggedIn" class="right-side">
             <!--  User Notifications -->
             <div class="header-widget hide-on-mobile">
               <!-- Notifications -->
@@ -281,9 +275,9 @@
 
                   <ul class="user-menu-small-nav">
                     <li>
-                      <a href="dashboard.html"
+                      <router-link :to="{ name: 'Dashboard' }"
                         ><i class="icon-material-outline-dashboard"></i>
-                        Dashboard</a
+                        Dashboard</router-link
                       >
                     </li>
                     <li>
@@ -293,10 +287,10 @@
                       >
                     </li>
                     <li>
-                      <a href="#" @click="logout">
+                      <router-link :to="{ name: 'Logout' }">
                         <i class="icon-material-outline-power-settings-new"></i>
                         Logout
-                      </a>
+                      </router-link>
                     </li>
                   </ul>
                 </div>
@@ -316,7 +310,8 @@
           <!-- Right Side Content / End -->
 
           <!-- Right Side Content / End -->
-          <!-- <div
+          <div
+            v-if="!loggedIn && !['login', 'register'].includes($route.name)"
             class="right-side"
           >
             <div class="header-widget">
@@ -327,17 +322,17 @@
                 ><i class="icon-feather-log-in" />
                 <span>Log In / Register</span></a
               >
-            </div> -->
+            </div>
 
-          <!-- Mobile Navigation Button -->
-          <!-- <span class="mmenu-trigger">
+            <!-- Mobile Navigation Button -->
+            <span class="mmenu-trigger">
               <button class="hamburger hamburger--collapse" type="button">
                 <span class="hamburger-box">
                   <span class="hamburger-inner" />
                 </span>
               </button>
             </span>
-          </div> -->
+          </div>
           <!-- Right Side Content / End -->
         </div>
       </div>
@@ -354,14 +349,8 @@ export default {
   },
   name: "Navbar",
   computed: {
-    isLoggedIn() {
-      return this.$store.getters.isAuthenticated;
-    },
-  },
-  methods: {
-    logout() {
-      this.$store.dispatch("logout");
-      this.$router.push("/");
+    loggedIn() {
+      return this.$store.getters.loggedIn;
     },
   },
 };

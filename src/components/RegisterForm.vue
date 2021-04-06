@@ -3,7 +3,7 @@
     <!-- Welcome Text -->
     <div class="welcome-text">
       <h3 style="font-size: 26px">Let's create your account!</h3>
-      <span
+      <span v-if="['login', 'register'].includes($route.name)"
         >Already have an account?
         <router-link to="/login">Log in!</router-link></span
       >
@@ -208,7 +208,7 @@ export default {
             this.phone = "";
             this.isLoading = false;
             $(".mfp-close").click();
-            this.$router.push("/dashboard");
+            this.$router.push({ name: "Dashboard" });
           })
           .catch((err) => {
             this.error.response.status = true;

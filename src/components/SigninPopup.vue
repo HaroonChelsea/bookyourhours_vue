@@ -25,7 +25,13 @@
   <!-- Sign In Popup / End -->
 </template>
 <script>
+import RegisterForm from "@/components/RegisterForm";
+import SigninForm from "@/components/SigninForm";
 export default {
+  components: {
+    SigninForm,
+    RegisterForm,
+  },
   name: "SigninPopup",
 };
 </script>

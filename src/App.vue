@@ -1,21 +1,16 @@
 <template>
-  <fragment>
-    <Navbar />
+  <div id="wrapper">
     <router-view />
-    <Footer />
-  </fragment>
+  </div>
 </template>
 
 <script>
-import { Fragment } from "vue-fragment";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 export default {
   name: "App",
-  components: {
-    Fragment,
-    Navbar,
-    Footer,
+  created() {
+    this.$store.dispatch("refreshUserToken").catch(() => {
+      this.$router.push("/");
+    });
   },
 };
 </script>
