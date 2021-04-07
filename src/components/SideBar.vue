@@ -18,9 +18,10 @@
         <div class="dashboard-nav">
           <div class="dashboard-nav-inner">
             <ul data-submenu-title="Start">
-              <li class="active">
-                <a href="dashboard.html"
-                  ><i class="icon-material-outline-dashboard"></i> Dashboard</a
+              <li :class="`${$route.name === 'Dashboard' ? 'active' : ''}`">
+                <router-link :to="{ name: 'Dashboard' }"
+                  ><i class="icon-material-outline-dashboard"></i>
+                  Dashboard</router-link
                 >
               </li>
               <li>
@@ -43,7 +44,11 @@
             </ul>
 
             <ul data-submenu-title="Organize and Manage">
-              <li>
+              <li
+                :class="`${
+                  ['JobPost'].includes(this.$route.name) ? 'active-submenu' : ''
+                }`"
+              >
                 <a href="#"
                   ><i class="icon-material-outline-business-center"></i> Jobs</a
                 >
@@ -58,7 +63,11 @@
                       >Manage Candidates</a
                     >
                   </li>
-                  <li><a href="dashboard-post-a-job.html">Post a Job</a></li>
+                  <li>
+                    <router-link :to="{ name: 'JobPost' }"
+                      >Post a Job</router-link
+                    >
+                  </li>
                 </ul>
               </li>
               <li>

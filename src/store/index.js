@@ -29,6 +29,23 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    postJob(vuexContext, data) {
+      if (vuexContext.state.tokens) {
+        axios.defaults.headers.common["Authorization"] =
+          "Bearer " + vuexContext.state.tokens.access.token;
+        return new Promise((resolve, reject) => {
+          axios
+            .post("/jobPost", data)
+            .then((response) => {
+              resolve(response);
+            })
+            .catch((error) => {
+              console.log(error);
+              reject(error);
+            });
+        });
+      }
+    },
     refreshUserToken(vuexContext) {
       if (vuexContext.state.tokens) {
         if (

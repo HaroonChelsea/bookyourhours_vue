@@ -2,7 +2,7 @@
   <fragment>
     <!-- Header Container
 ================================================== -->
-    <header id="header-container" class="fullwidth">
+    <header id="header-container" v-bind:class="dashboardRoute">
       <!-- Header -->
       <div id="header">
         <div class="container">
@@ -351,6 +351,11 @@ export default {
   computed: {
     loggedIn() {
       return this.$store.getters.loggedIn;
+    },
+    dashboardRoute: function () {
+      return ["Dashboard", "JobPost"].includes(this.$route.name)
+        ? "fullwidth dashboard-header not-sticky"
+        : "fullwidth";
     },
   },
 };

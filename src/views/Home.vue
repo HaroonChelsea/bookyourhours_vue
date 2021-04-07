@@ -18,6 +18,7 @@ export default {
     if (!document.getElementById("customJs")) {
       let customScript = document.createElement("script");
       customScript.setAttribute("src", "/assets/js/custom.js");
+      customScript.setAttribute("type", "text/javascript");
       customScript.setAttribute("id", "customJs");
       document.body.appendChild(customScript);
     } else {
@@ -26,6 +27,7 @@ export default {
       document.body.removeChild(document.getElementById("backtotop"));
       customScript = document.createElement("script");
       customScript.setAttribute("src", "/assets/js/custom.js");
+      customScript.setAttribute("type", "text/javascript");
       customScript.setAttribute("id", "customJs");
       document.body.appendChild(customScript);
     }

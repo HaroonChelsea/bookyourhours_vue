@@ -42,6 +42,11 @@ const routes = [
         name: "Dashboard",
         component: () => import("@/views/Dashboard.vue"),
       },
+      {
+        path: "/post-a-job",
+        name: "JobPost",
+        component: () => import("@/views/JobPost.vue"),
+      },
     ],
     meta: {
       requiresAuth: true,
