@@ -19,6 +19,9 @@ const routes = [
         path: "/job/:id",
         name: "Job",
         component: () => import("@/views/Job.vue"),
+        meta: {
+          requiresVisitor: true,
+        },
       },
     ],
   },
@@ -72,6 +75,9 @@ const routes = [
         component: () => import("@/views/BrowseJobs.vue"),
       },
     ],
+    meta: {
+      requiresVisitor: true,
+    },
   },
 
   {
