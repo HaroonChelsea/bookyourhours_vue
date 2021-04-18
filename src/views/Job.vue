@@ -17,7 +17,13 @@
                   /></a>
                 </div>
                 <div class="header-details">
-                  <h3>{{ job.title }}</h3>
+                  <h3 v-if="job.title">{{ job.title }}</h3>
+                  <vue-skeleton-loader
+                    v-else
+                    :width="300"
+                    :height="50"
+                    animation="fade"
+                  />
                   <h5>About the Employer</h5>
                   <ul>
                     <li>
@@ -39,7 +45,15 @@
               <div class="right-side">
                 <div class="salary-box">
                   <div class="salary-type">Project Budget</div>
-                  <div class="salary-amount">${{ job.price }}</div>
+                  <div v-if="job.price" class="salary-amount">
+                    ${{ job.price }}
+                  </div>
+                  <vue-skeleton-loader
+                    v-else
+                    :width="100"
+                    :height="30"
+                    animation="fade"
+                  />
                 </div>
               </div>
             </div>
@@ -54,8 +68,40 @@
           <!-- Description -->
           <div class="single-page-section">
             <h3 class="margin-bottom-25">Project Description</h3>
-            <p>
+            <p v-if="job.description">
               {{ job.description }}
+            </p>
+            <p v-else>
+              <vue-skeleton-loader
+                :width="500"
+                :height="30"
+                animation="fade"
+                class="mtt"
+              />
+              <vue-skeleton-loader
+                :width="700"
+                :height="30"
+                animation="fade"
+                class="mtt"
+              />
+              <vue-skeleton-loader
+                :width="700"
+                :height="30"
+                animation="fade"
+                class="mtt"
+              />
+              <vue-skeleton-loader
+                :width="700"
+                :height="30"
+                animation="fade"
+                class="mtt"
+              />
+              <vue-skeleton-loader
+                :width="700"
+                :height="30"
+                animation="fade"
+                class="mtt"
+              />
             </p>
           </div>
 
@@ -84,8 +130,31 @@
           <!-- Skills -->
           <div class="single-page-section">
             <h3>Skills Required</h3>
-            <div class="task-tags">
+            <div v-if="job.tags" class="task-tags">
               <span v-for="tag in job.tags" :key="tag.id">{{ tag.title }}</span>
+            </div>
+            <div v-else class="task-tags">
+              <span
+                ><vue-skeleton-loader
+                  :width="150"
+                  :height="30"
+                  animation="fade"
+                  class="mtt"
+              /></span>
+              <span
+                ><vue-skeleton-loader
+                  :width="150"
+                  :height="30"
+                  animation="fade"
+                  class="mtt"
+              /></span>
+              <span
+                ><vue-skeleton-loader
+                  :width="150"
+                  :height="30"
+                  animation="fade"
+                  class="mtt"
+              /></span>
             </div>
           </div>
           <div class="clearfix"></div>
@@ -339,6 +408,7 @@
 <script>
 import { Fragment } from "vue-fragment";
 import Slider from "@vueform/slider/dist/slider.vue2.js";
+import VueSkeletonLoader from "skeleton-loader-vue";
 
 export default {
   data() {
@@ -379,7 +449,7 @@ export default {
       },
     };
   },
-  components: { Slider, Fragment },
+  components: { Slider, Fragment, VueSkeletonLoader },
   methods: {
     addBid() {
       if (this.validateBid()) {
@@ -458,10 +528,11 @@ export default {
       .dispatch("getAJob", { id: this.$route.params.id })
       .then((res) => {
         this.job = res.data;
+        this.$store.dispatch("getJobBids", { id: this.job.id }).then((res) => {
+          this.bids = res;
+        });
       });
-    this.$store.dispatch("getJobBids", { id: this.job.id }).then((res) => {
-      this.bids = res;
-    });
+
     if (!document.getElementById("customJs")) {
       let customScript = document.createElement("script");
       customScript.setAttribute("src", "/assets/js/custom.js");
