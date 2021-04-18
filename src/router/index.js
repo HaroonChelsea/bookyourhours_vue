@@ -20,7 +20,7 @@ const routes = [
         name: "Job",
         component: () => import("@/views/Job.vue"),
         meta: {
-          requiresVisitor: true,
+          requiresAuth: true,
         },
       },
     ],
@@ -76,7 +76,7 @@ const routes = [
       },
     ],
     meta: {
-      requiresVisitor: true,
+      requiresAuth: true,
     },
   },
 
