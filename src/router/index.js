@@ -47,11 +47,28 @@ const routes = [
         name: "JobPost",
         component: () => import("@/views/JobPost.vue"),
       },
+      {
+        path: "/manage-jobs",
+        name: "ManageJobs",
+        component: () => import("@/views/ManageJobs.vue"),
+      },
     ],
     meta: {
       requiresAuth: true,
     },
   },
+  {
+    path: "/browse-jobs",
+    component: () => import("@/layouts/BrowseLayout.vue"),
+    children: [
+      {
+        path: "/browse-jobs",
+        name: "BrowseJobs",
+        component: () => import("@/views/BrowseJobs.vue"),
+      },
+    ],
+  },
+
   {
     path: "/logout",
     name: "Logout",

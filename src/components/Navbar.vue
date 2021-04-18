@@ -23,7 +23,14 @@
                 </li>
 
                 <li>
-                  <a href="#">Find Work</a>
+                  <a>Find Work</a>
+                  <ul class="dropdown-nav">
+                    <li>
+                      <router-link :to="{ name: 'BrowseJobs' }"
+                        >Browse Jobs</router-link
+                      >
+                    </li>
+                  </ul>
                 </li>
 
                 <li>

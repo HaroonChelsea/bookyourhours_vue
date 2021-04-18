@@ -10,6 +10,7 @@ export default new Vuex.Store({
   state: {
     tokens: JSON.parse(localStorage.getItem("tokens")) || null,
     user: JSON.parse(localStorage.getItem("user")) || null,
+    allJobs: null,
   },
   getters: {
     loggedIn(state) {
@@ -37,6 +38,24 @@ export default new Vuex.Store({
           axios
             .post("/jobPost", data)
             .then((response) => {
+              resolve(response);
+            })
+            .catch((error) => {
+              console.log(error);
+              reject(error);
+            });
+        });
+      }
+    },
+    getAllJobs(vuexContext) {
+      if (vuexContext.state.tokens) {
+        axios.defaults.headers.common["Authorization"] =
+          "Bearer " + vuexContext.state.tokens.access.token;
+        return new Promise((resolve, reject) => {
+          axios
+            .get("/jobPost")
+            .then((response) => {
+              console.log(response);
               resolve(response);
             })
             .catch((error) => {

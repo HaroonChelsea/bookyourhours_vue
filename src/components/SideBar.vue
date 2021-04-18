@@ -54,8 +54,8 @@
                 >
                 <ul>
                   <li>
-                    <a href="dashboard-manage-jobs.html"
-                      >Manage Jobs <span class="nav-tag">3</span></a
+                    <router-link :to="{ name: 'ManageJobs' }"
+                      >Manage Jobs <span class="nav-tag">3</span></router-link
                     >
                   </li>
                   <li>
@@ -100,9 +100,9 @@
                 >
               </li>
               <li>
-                <a href="index-logged-out.html"
+                <router-link :to="{ name: 'Logout' }"
                   ><i class="icon-material-outline-power-settings-new"></i>
-                  Logout</a
+                  Logout</router-link
                 >
               </li>
             </ul>
