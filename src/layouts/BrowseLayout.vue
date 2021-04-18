@@ -157,15 +157,18 @@
         <router-view />
       </div>
     </div>
+    <Footer />
   </fragment>
 </template>
 
 <script>
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { Fragment } from "vue-fragment";
 export default {
   components: {
     Navbar,
+    Footer,
     Fragment,
   },
 };
