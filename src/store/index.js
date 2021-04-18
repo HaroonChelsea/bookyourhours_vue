@@ -64,7 +64,6 @@ export default new Vuex.Store({
       }
     },
     getAJob(vuexContext, data) {
-      console.log(data);
       if (vuexContext.state.tokens) {
         axios.defaults.headers.common["Authorization"] =
           "Bearer " + vuexContext.state.tokens.access.token;
@@ -73,6 +72,46 @@ export default new Vuex.Store({
             .get(`/jobPost/${data.id}`)
             .then((response) => {
               resolve(response);
+            })
+            .catch((error) => {
+              console.log(error);
+              reject(error);
+            });
+        });
+      }
+    },
+    createBid(vuexContext, data) {
+      console.log(data);
+      if (vuexContext.state.tokens) {
+        axios.defaults.headers.common["Authorization"] =
+          "Bearer " + vuexContext.state.tokens.access.token;
+        return new Promise((resolve, reject) => {
+          axios
+            .post("/bid/", data)
+            .then((response) => {
+              console.log(response);
+              resolve(response);
+            })
+            .catch((error) => {
+              console.log(error);
+              reject(error);
+            });
+        });
+      }
+    },
+    getJobBids(vuexContext, data) {
+      if (vuexContext.state.tokens) {
+        axios.defaults.headers.common["Authorization"] =
+          "Bearer " + vuexContext.state.tokens.access.token;
+        return new Promise((resolve, reject) => {
+          axios
+            .get("/bid")
+            .then((response) => {
+              resolve(
+                response.data.results.filter(
+                  (bid) => bid.jobPost.id === data.id
+                )
+              );
             })
             .catch((error) => {
               console.log(error);

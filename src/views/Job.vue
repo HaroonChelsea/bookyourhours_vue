@@ -69,6 +69,18 @@
             </div>
           </div>
 
+          <!-- Questions -->
+          <div v-if="job.questions" class="single-page-section">
+            <h3>Questions</h3>
+            <div class="numbered">
+              <ol>
+                <li v-for="(question, i) in job.questions" :key="i">
+                  {{ question }}
+                </li>
+              </ol>
+            </div>
+          </div>
+
           <!-- Skills -->
           <div class="single-page-section">
             <h3>Skills Required</h3>
@@ -85,15 +97,17 @@
                 <i class="icon-material-outline-group"></i> Freelancers Bidding
               </h3>
             </div>
-            <ul class="boxed-list-ul">
-              <li>
+            <ul v-if="bids.length > 0" class="boxed-list-ul">
+              <li v-for="bid in bids" :key="bid.id">
                 <div class="bid">
                   <!-- Avatar -->
                   <div class="bids-avatar">
                     <div class="freelancer-avatar">
                       <div class="verified-badge"></div>
-                      <a href="single-freelancer-profile.html"
-                        ><img src="images/user-avatar-big-01.jpg" alt=""
+                      <a href="#"
+                        ><img
+                          src="/assets/images/user-avatar-big-01.jpg"
+                          alt=""
                       /></a>
                     </div>
                   </div>
@@ -103,11 +117,11 @@
                     <!-- Name -->
                     <div class="freelancer-name">
                       <h4>
-                        <a href="single-freelancer-profile.html"
-                          >Tom Smith
+                        <a href="#"
+                          >{{ bid.user.name }}
                           <img
                             class="flag"
-                            src="images/flags/gb.svg"
+                            src="/assets/images/flags/gb.svg"
                             alt=""
                             title="United Kingdom"
                             data-tippy-placement="top"
@@ -120,130 +134,17 @@
                   <!-- Bid -->
                   <div class="bids-bid">
                     <div class="bid-rate">
-                      <div class="rate">$4,400</div>
-                      <span>in 7 days</span>
+                      <div class="rate">${{ bid.price }}</div>
+                      <span>in {{ bid.time }}</span>
                     </div>
                   </div>
                 </div>
               </li>
-              <li>
-                <div class="bid">
-                  <!-- Avatar -->
-                  <div class="bids-avatar">
-                    <div class="freelancer-avatar">
-                      <div class="verified-badge"></div>
-                      <a href="single-freelancer-profile.html"
-                        ><img src="images/user-avatar-big-02.jpg" alt=""
-                      /></a>
-                    </div>
-                  </div>
-
-                  <!-- Content -->
-                  <div class="bids-content">
-                    <!-- Name -->
-                    <div class="freelancer-name">
-                      <h4>
-                        <a href="single-freelancer-profile.html"
-                          >David Peterson
-                          <img
-                            class="flag"
-                            src="images/flags/de.svg"
-                            alt=""
-                            title="Germany"
-                            data-tippy-placement="top"
-                        /></a>
-                      </h4>
-                      <div class="star-rating" data-rating="4.2"></div>
-                    </div>
-                  </div>
-
-                  <!-- Bid -->
-                  <div class="bids-bid">
-                    <div class="bid-rate">
-                      <div class="rate">$2,200</div>
-                      <span>in 14 days</span>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="bid">
-                  <!-- Avatar -->
-                  <div class="bids-avatar">
-                    <div class="freelancer-avatar">
-                      <a href="single-freelancer-profile.html"
-                        ><img src="images/user-avatar-placeholder.png" alt=""
-                      /></a>
-                    </div>
-                  </div>
-
-                  <!-- Content -->
-                  <div class="bids-content">
-                    <!-- Name -->
-                    <div class="freelancer-name">
-                      <h4>
-                        <a href="single-freelancer-profile.html"
-                          >Marcin Kowalski
-                          <img
-                            class="flag"
-                            src="images/flags/pl.svg"
-                            alt=""
-                            title="Poland"
-                            data-tippy-placement="top"
-                        /></a>
-                      </h4>
-                      <span class="not-rated">Minimum of 3 votes required</span>
-                    </div>
-                  </div>
-
-                  <!-- Bid -->
-                  <div class="bids-bid">
-                    <div class="bid-rate">
-                      <div class="rate">$3,800</div>
-                      <span>In 20 days</span>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="bid">
-                  <!-- Avatar -->
-                  <div class="bids-avatar">
-                    <div class="freelancer-avatar">
-                      <a href="single-freelancer-profile.html"
-                        ><img src="images/user-avatar-placeholder.png" alt=""
-                      /></a>
-                    </div>
-                  </div>
-
-                  <!-- Content -->
-                  <div class="bids-content">
-                    <!-- Name -->
-                    <div class="freelancer-name">
-                      <h4>
-                        <a href="single-freelancer-profile.html"
-                          >Sebastiano Piccio
-                          <img
-                            class="flag"
-                            src="images/flags/it.svg"
-                            alt=""
-                            title="Italy"
-                            data-tippy-placement="top"
-                        /></a>
-                      </h4>
-                      <div class="star-rating" data-rating="4.5"></div>
-                    </div>
-                  </div>
-
-                  <!-- Bid -->
-                  <div class="bids-bid">
-                    <div class="bid-rate">
-                      <div class="rate">$3,400</div>
-                      <span>In 10 days</span>
-                    </div>
-                  </div>
-                </div>
-              </li>
+            </ul>
+            <ul class="boxed-list-ul mtt" v-else>
+              <div class="notification warning closeable mtt">
+                <p>No bid yet! Be first to add bid.</p>
+              </div>
             </ul>
           </div>
         </div>
@@ -260,56 +161,87 @@
                 <div class="bidding-headline"><h3>Bid on this job!</h3></div>
                 <div class="bidding-inner">
                   <!-- Headline -->
+                  <div
+                    v-if="error.response.status"
+                    class="notification error closeable"
+                  >
+                    <p>{{ error.response.message }}</p>
+                    <a
+                      class="close"
+                      @click="error.response.status = !error.response.status"
+                    ></a>
+                  </div>
+                  <div
+                    v-if="success.status"
+                    class="notification success closeable"
+                  >
+                    <p>{{ success.message }}</p>
+                    <a
+                      class="close"
+                      @click="success.status = !success.status"
+                    ></a>
+                  </div>
                   <span class="bidding-detail"
                     >Set your <strong>minimal rate</strong></span
                   >
 
                   <!-- Price Slider -->
                   <div class="bidding-value">
-                    $<span id="biddingVal"></span>
+                    $<span id="biddingVal">{{ price }}</span>
                   </div>
-                  <input
-                    class="bidding-slider"
-                    type="text"
-                    value=""
-                    data-slider-handle="custom"
-                    data-slider-currency="$"
-                    data-slider-min="2500"
-                    data-slider-max="4500"
-                    data-slider-value="auto"
-                    data-slider-step="50"
-                    data-slider-tooltip="hide"
-                  />
-
-                  <!-- Headline -->
-                  <span class="bidding-detail margin-top-30"
-                    >Set your <strong>delivery time</strong></span
-                  >
-
-                  <!-- Fields -->
+                  <Slider :max="job.price" v-model="price" />
+                  <div class="mtt">
+                    <input v-model="price" type="number" class="with-border" />
+                  </div>
                   <div class="bidding-fields">
                     <div class="bidding-field">
                       <!-- Quantity Buttons -->
                       <div class="qtyButtons">
-                        <div class="qtyDec"></div>
-                        <input type="text" name="qtyInput" value="1" />
-                        <div class="qtyInc"></div>
+                        <button
+                          @click="days > 1 ? days-- : (days = 1)"
+                          class="qtyDec"
+                        ></button>
+                        <input type="text" name="qtyInput" v-model="days" />
+                        <button @click="days++" class="qtyInc"></button>
                       </div>
                     </div>
                     <div class="bidding-field">
-                      <select class="selectpicker default">
-                        <option selected>Days</option>
-                        <option>Hours</option>
+                      <select v-model="selected" class="selectpicker default">
+                        <option value="hours">Hours</option>
+                        <option value="days">Days</option>
+                        <option value="months">Months</option>
                       </select>
                     </div>
+                  </div>
+                  <!-- Headline -->
+                  <div class="submit-field mtt">
+                    <h5>Any message</h5>
+                    <textarea
+                      v-model="description"
+                      cols="30"
+                      rows="3"
+                      placeholder="Enter your message"
+                      class="with-border"
+                    ></textarea>
+                    <small v-if="error.description.status" class="error">
+                      {{ error.description.message }}
+                    </small>
                   </div>
 
                   <!-- Button -->
                   <button
+                    v-bind:disabled="isLoading"
+                    @click="addBid"
                     id="snackbar-place-bid"
                     class="button ripple-effect move-on-hover full-width margin-top-30"
                   >
-                    <span>Place a Bid</span>
+                    <div v-if="isLoading" class="lds-ring">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div v-else><span>Place a Bid</span></div>
                   </button>
                 </div>
                 <div class="bidding-signup">
@@ -406,15 +338,120 @@
 </template>
 <script>
 import { Fragment } from "vue-fragment";
+import Slider from "@vueform/slider/dist/slider.vue2.js";
 
 export default {
   data() {
     return {
+      bids: [],
+      isLoading: false,
+      selected: "days",
+      description: "",
+      days: 1,
+      price: 20,
       job: {},
+      success: {
+        status: false,
+        message: "Added successfully!",
+      },
+      error: {
+        selected: {
+          status: false,
+          message: "",
+        },
+        description: {
+          status: false,
+          message: "",
+        },
+        days: {
+          status: false,
+          message: "",
+        },
+        price: {
+          status: false,
+          message: "",
+        },
+
+        response: {
+          status: false,
+          message: "",
+        },
+      },
     };
   },
-  components: {
-    Fragment,
+  components: { Slider, Fragment },
+  methods: {
+    addBid() {
+      if (this.validateBid()) {
+        this.isLoading = true;
+        this.$store
+          .dispatch("createBid", {
+            time: this.days + " " + this.selected,
+            price: this.price,
+            currency: "USD",
+            jobType: this.job.jobType,
+            jobPost: this.job.id,
+            description: this.description,
+          })
+          .then(() => {
+            this.selected = "days";
+            this.description = "";
+            this.days = 1;
+            this.price = 20;
+            this.isLoading = false;
+            this.success.status = true;
+            setTimeout(() => {
+              this.success.status = false;
+            }, 5000);
+            this.$store
+              .dispatch("getJobBids", { id: this.job.id })
+              .then((res) => {
+                this.bids = res;
+              });
+          })
+          .catch((err) => {
+            this.error.response.status = true;
+            this.error.response.message = err.response.data.message
+              ? err.response.data.message
+              : "Something went wrong!";
+            this.isLoading = false;
+          });
+      }
+    },
+    validateBid() {
+      if (this.description && this.days && this.price && this.selected) {
+        if (["days", "months", "hours"].includes(this.selected)) {
+          this.error.selected.status = true;
+          this.error.selected.message = "Invalid time!";
+        }
+
+        if (!this.price || this.price <= 0) {
+          this.error.price.status = true;
+          this.error.price.message = "Price is required!";
+          return false;
+        }
+        if (this.days <= 0) {
+          this.error.days.status = true;
+          this.error.days.message = "Invalid time!";
+          return false;
+        }
+        this.error.days.status = false;
+        this.error.description.status = false;
+        this.error.price.status = false;
+        this.error.selected.status = false;
+        return true;
+      }
+      if (!this.description) {
+        this.error.description.status = true;
+        this.error.description.message = "Description is required!";
+      }
+      setTimeout(() => {
+        this.error.days.status = false;
+        this.error.description.status = false;
+        this.error.price.status = false;
+        this.error.selected.status = false;
+      }, 5000);
+    },
   },
   mounted() {
     this.$store
@@ -422,6 +459,9 @@ export default {
       .then((res) => {
         this.job = res.data;
       });
+    this.$store.dispatch("getJobBids", { id: this.job.id }).then((res) => {
+      this.bids = res;
+    });
     if (!document.getElementById("customJs")) {
       let customScript = document.createElement("script");
       customScript.setAttribute("src", "/assets/js/custom.js");
@@ -441,3 +481,61 @@ export default {
   },
 };
 </script>
+<style>
+@import "~@vueform/slider/themes/default.css";
+
+.slider-connect,
+.slider-base {
+  background: #2a41e8;
+}
+.slider-tooltip {
+  background: #2a41e8;
+}
+.mtt {
+  margin-top: 20px;
+}
+.error {
+  color: red;
+}
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.ti-tag {
+  background-color: rgba(42, 65, 232, 0.07) !important;
+  color: #2a41e8 !important;
+}
+.ti-new-tag-input {
+  padding: 0px 10px !important;
+}
+</style>

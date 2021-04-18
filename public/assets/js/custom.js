@@ -997,24 +997,24 @@
       return x1 + x2;
     }
 
-    // Bidding Slider Average Value
-    var avgValue =
-      (parseInt($(".bidding-slider").attr("data-slider-min")) +
-        parseInt($(".bidding-slider").attr("data-slider-max"))) /
-      2;
-    if ($(".bidding-slider").data("slider-value") === "auto") {
-      $(".bidding-slider").attr({ "data-slider-value": avgValue });
-    }
+    // // Bidding Slider Average Value
+    // var avgValue =
+    //   (parseInt($(".bidding-slider").attr("data-slider-min")) +
+    //     parseInt($(".bidding-slider").attr("data-slider-max"))) /
+    //   2;
+    // if ($(".bidding-slider").data("slider-value") === "auto") {
+    //   $(".bidding-slider").attr({ "data-slider-value": avgValue });
+    // }
 
-    // Bidding Slider Init
-    $(".bidding-slider").slider();
+    // // Bidding Slider Init
+    // $(".bidding-slider").slider();
 
-    $(".bidding-slider").on("slide", function (slideEvt) {
-      $("#biddingVal").text(ThousandSeparator(parseInt(slideEvt.value)));
-    });
-    $("#biddingVal").text(
-      ThousandSeparator(parseInt($(".bidding-slider").val()))
-    );
+    // $(".bidding-slider").on("slide", function (slideEvt) {
+    //   $("#biddingVal").text(ThousandSeparator(parseInt(slideEvt.value)));
+    // });
+    // $("#biddingVal").text(
+    //   ThousandSeparator(parseInt($(".bidding-slider").val()))
+    // );
 
     // Default Bootstrap Range Slider
     var currencyAttr = $(".range-slider").attr("data-slider-currency");
@@ -1064,38 +1064,38 @@
     /*--------------------------------------------------*/
     /*  Quantity Buttons
 	/*--------------------------------------------------*/
-    function qtySum() {
-      var arr = document.getElementsByName("qtyInput");
-      var tot = 0;
-      for (var i = 0; i < arr.length; i++) {
-        if (parseInt(arr[i].value)) tot += parseInt(arr[i].value);
-      }
-    }
-    qtySum();
+    // function qtySum() {
+    //   var arr = document.getElementsByName("qtyInput");
+    //   var tot = 0;
+    //   for (var i = 0; i < arr.length; i++) {
+    //     if (parseInt(arr[i].value)) tot += parseInt(arr[i].value);
+    //   }
+    // }
+    // qtySum();
 
-    $(".qtyDec, .qtyInc").on("click", function () {
-      var $button = $(this);
-      var oldValue = $button.parent().find("input").val();
+    // $(".qtyDec, .qtyInc").on("click", function () {
+    //   var $button = $(this);
+    //   var oldValue = $button.parent().find("input").val();
 
-      if ($button.hasClass("qtyInc")) {
-        $button
-          .parent()
-          .find("input")
-          .val(parseFloat(oldValue) + 1);
-      } else {
-        if (oldValue > 1) {
-          $button
-            .parent()
-            .find("input")
-            .val(parseFloat(oldValue) - 1);
-        } else {
-          $button.parent().find("input").val(1);
-        }
-      }
+    //   if ($button.hasClass("qtyInc")) {
+    //     $button
+    //       .parent()
+    //       .find("input")
+    //       .val(parseFloat(oldValue) + 1);
+    //   } else {
+    //     if (oldValue > 1) {
+    //       $button
+    //         .parent()
+    //         .find("input")
+    //         .val(parseFloat(oldValue) - 1);
+    //     } else {
+    //       $button.parent().find("input").val(1);
+    //     }
+    //   }
 
-      qtySum();
-      $(".qtyTotal").addClass("rotate-x");
-    });
+    //   qtySum();
+    //   $(".qtyTotal").addClass("rotate-x");
+    // });
 
     /*----------------------------------------------------*/
     /*  Inline CSS replacement for backgrounds
