@@ -75,45 +75,6 @@
                 <div></div>
               </div>
             </div>
-
-            <!-- Task -->
-            <a href="single-task-page.html" class="task-listing">
-              <!-- Job Listing Details -->
-              <div class="task-listing-details">
-                <!-- Details -->
-                <div class="task-listing-description">
-                  <h3 class="task-listing-title">PHP Core Website Fixes</h3>
-                  <ul class="task-icons">
-                    <li>
-                      <i class="icon-material-outline-location-off"></i>
-                      Online Job
-                    </li>
-                    <li>
-                      <i class="icon-material-outline-access-time"></i> 1 hour
-                      ago
-                    </li>
-                  </ul>
-                  <div class="task-tags margin-top-15">
-                    <span>PHP</span>
-                    <span>MySQL Administration</span>
-                    <span>API Development</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="task-listing-bid">
-                <div class="task-listing-bid-inner">
-                  <div class="task-offers">
-                    <strong>$50 - $80</strong>
-                    <span>Hourly Rate</span>
-                  </div>
-                  <span class="button button-sliding-icon ripple-effect"
-                    >Bid Now
-                    <i class="icon-material-outline-arrow-right-alt"></i
-                  ></span>
-                </div>
-              </div>
-            </a>
           </div>
           <!-- Jobs Container / End -->
         </div>
