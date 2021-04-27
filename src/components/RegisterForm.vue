@@ -8,7 +8,7 @@
         <router-link to="/login">Log in!</router-link></span
       >
     </div>
-
+    <p>{{ accountType }}</p>
     <!-- Account Type -->
     <div class="account-type">
       <div>
@@ -17,7 +17,8 @@
           type="radio"
           name="account-type-radio"
           class="account-type-radio"
-          checked
+          value="freelancer"
+          v-model="accountType"
         />
         <label for="freelancer-radio" class="ripple-effect-dark"
           ><i class="icon-material-outline-account-circle"></i>
@@ -31,6 +32,8 @@
           type="radio"
           name="account-type-radio"
           class="account-type-radio"
+          value="employer"
+          v-model="accountType"
         />
         <label for="employer-radio" class="ripple-effect-dark"
           ><i class="icon-material-outline-business-center"></i> Employer</label
@@ -162,6 +165,7 @@ export default {
       phone: "",
       password: "",
       passwordConfirm: "",
+      accountType: "freelancer",
       error: {
         name: {
           status: false,
@@ -200,6 +204,7 @@ export default {
             email: this.email,
             password: this.password,
             phoneNumber: this.phone,
+            accountType: this.accountType,
           })
           .then(() => {
             this.name = "";

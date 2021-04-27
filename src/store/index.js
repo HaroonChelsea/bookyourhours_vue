@@ -179,6 +179,7 @@ export default new Vuex.Store({
             email: userData.email,
             password: userData.password,
             phoneNumber: userData.phoneNumber,
+            accountType: userData.accountType,
           })
           .then((response) => {
             vuexContext.commit("setUser", response.data.user);
