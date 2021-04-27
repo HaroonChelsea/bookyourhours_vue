@@ -105,6 +105,7 @@ export default {
     this.$store
       .dispatch("getAllJobs", {
         asc: true,
+        tags: [],
       })
       .then((res) => {
         this.jobs = res.data.results;
