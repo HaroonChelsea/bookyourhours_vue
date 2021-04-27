@@ -1,7 +1,7 @@
 <template>
   <div class="col-xl-9 col-lg-8 content-left-offset">
     <h3 class="page-title">Search Results</h3>
-
+    {{ tags }}
     <div class="notify-box margin-top-15">
       <div class="switch-container">
         <label class="switch"
@@ -14,12 +14,18 @@
 
       <div class="sort-by">
         <span>Sort by:</span>
-        <select class="selectpicker hide-tick">
-          <option>Relevance</option>
-          <option>Newest</option>
-          <option>Oldest</option>
-          <option>Random</option>
-        </select>
+        <button
+          class="button button-sliding-icon ripple-effect"
+          @click="getAllJobs('asc')"
+        >
+          Ascending
+        </button>
+        <button
+          class="button button-sliding-icon ripple-effect"
+          @click="getAllJobs('desc')"
+        >
+          Desending
+        </button>
       </div>
     </div>
 
@@ -112,25 +118,49 @@
 </template>
 
 <script>
+// import VueTagsInput from "@johmun/vue-tags-input";
+
 export default {
+  props: ["tags"],
   data() {
     return {
+      filterTags: [],
       jobs: null,
     };
   },
+  watch: {
+    tags: function (newTags) {
+      this.filterTags = [];
+      newTags.map((tag) => {
+        this.filterTags.push(tag.key);
+      });
+      this.getAllJobs("asc");
+    },
+  },
+  methods: {
+    getAllJobs(sortBy) {
+      this.jobs = null;
+      this.$store
+        .dispatch("getAllJobs", {
+          [sortBy]: true,
+          tags: this.filterTags,
+        })
+        .then((res) => {
+          this.jobs = res.data.results;
+        });
+    },
+  },
   filters: {
     truncate: function (text) {
-      if (text.length > 30) {
-        return text.substring(0, 30) + "...";
+      if (text.length > 100) {
+        return text.substring(0, 100) + "...";
       } else {
         return text;
       }
     },
   },
   mounted() {
-    this.$store.dispatch("getAllJobs").then((res) => {
-      this.jobs = res.data.results;
-    });
+    this.getAllJobs("asc");
   },
 };
 </script>

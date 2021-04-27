@@ -49,20 +49,49 @@ export default new Vuex.Store({
         });
       }
     },
+    getAllTags(vuexContext) {
+      if (vuexContext.state.tokens) {
+        axios.defaults.headers.common["Authorization"] =
+          "Bearer " + vuexContext.state.tokens.access.token;
+        return new Promise((resolve, reject) => {
+          axios
+            .get("/tag")
+            .then((response) => {
+              resolve(response);
+            })
+            .catch((error) => {
+              console.log(error);
+              reject(error);
+            });
+        });
+      }
+    },
     getAllJobs(vuexContext, filter) {
       if (vuexContext.state.tokens) {
         axios.defaults.headers.common["Authorization"] =
           "Bearer " + vuexContext.state.tokens.access.token;
         return new Promise((resolve, reject) => {
           if (filter) {
-            let filterText;
+            let filterText = "";
             if (filter.asc) {
               filterText = "?sortBy=asc";
+            }
+            if (filter.desc) {
+              filterText = "?sortBy=desc";
+            }
+            if (filter.tags.length > 0) {
+              filterText += "&tags=";
+              filter.tags.map((el, i) => {
+                if (filter.tags.length === i + 1) {
+                  filterText += `${el}`;
+                } else {
+                  filterText += `${el},`;
+                }
+              });
             }
             axios
               .get(`/jobPost${filterText}`)
               .then((response) => {
-                console.log(response);
                 resolve(response);
               })
               .catch((error) => {

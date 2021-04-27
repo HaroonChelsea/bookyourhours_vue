@@ -45,7 +45,7 @@
             </div>
 
             <!-- Keywords -->
-            <div class="sidebar-widget">
+            <!-- <div class="sidebar-widget">
               <h3>Keywords</h3>
               <div class="keywords-container">
                 <div class="keyword-input-container">
@@ -58,18 +58,20 @@
                     <i class="icon-material-outline-add"></i>
                   </button>
                 </div>
-                <div class="keywords-list"><!-- keywords go here --></div>
-                <div class="clearfix"></div>
+                <div class="keywords-list"> -->
+            <!-- keywords go here -->
+            <!-- </div> -->
+            <!-- <div class="clearfix"></div>
               </div>
-            </div>
+            </div> -->
 
             <!-- Budget -->
-            <div class="sidebar-widget">
+            <!-- <div class="sidebar-widget">
               <h3>Fixed Price</h3>
-              <div class="margin-top-55"></div>
+              <div class="margin-top-55"></div> -->
 
-              <!-- Range Slider -->
-              <input
+            <!-- Range Slider -->
+            <!-- <input
                 class="range-slider"
                 type="text"
                 value=""
@@ -78,16 +80,16 @@
                 data-slider-max="2500"
                 data-slider-step="25"
                 data-slider-value="[10,2500]"
-              />
-            </div>
+              /> -->
+            <!-- </div> -->
 
             <!-- Hourly Rate -->
-            <div class="sidebar-widget">
+            <!-- <div class="sidebar-widget">
               <h3>Hourly Rate</h3>
-              <div class="margin-top-55"></div>
+              <div class="margin-top-55"></div> -->
 
-              <!-- Range Slider -->
-              <input
+            <!-- Range Slider -->
+            <!-- <input
                 class="range-slider"
                 type="text"
                 value=""
@@ -97,64 +99,24 @@
                 data-slider-step="5"
                 data-slider-value="[10,200]"
               />
-            </div>
+            </div> -->
 
             <!-- Tags -->
             <div class="sidebar-widget">
-              <h3>Skills</h3>
-
-              <div class="tags-container">
-                <div class="tag">
-                  <input type="checkbox" id="tag1" />
-                  <label for="tag1">front-end dev</label>
-                </div>
-                <div class="tag">
-                  <input type="checkbox" id="tag2" />
-                  <label for="tag2">angular</label>
-                </div>
-                <div class="tag">
-                  <input type="checkbox" id="tag3" />
-                  <label for="tag3">react</label>
-                </div>
-                <div class="tag">
-                  <input type="checkbox" id="tag4" />
-                  <label for="tag4">vue js</label>
-                </div>
-                <div class="tag">
-                  <input type="checkbox" id="tag5" />
-                  <label for="tag5">web apps</label>
-                </div>
-                <div class="tag">
-                  <input type="checkbox" id="tag6" />
-                  <label for="tag6">design</label>
-                </div>
-                <div class="tag">
-                  <input type="checkbox" id="tag7" />
-                  <label for="tag7">wordpress</label>
-                </div>
-              </div>
+              <h3>Search By Tags</h3>
+              <tags-input
+                element-id="tags"
+                :allow-duplicates="false"
+                :only-existing-tags="true"
+                v-model="selectedTags"
+                :existing-tags="tags"
+                :typeahead="true"
+              ></tags-input>
               <div class="clearfix"></div>
-
-              <!-- More Skills -->
-              <div class="keywords-container margin-top-20">
-                <div class="keyword-input-container">
-                  <input
-                    type="text"
-                    class="keyword-input"
-                    placeholder="add more skills"
-                  />
-                  <button class="keyword-input-button ripple-effect">
-                    <i class="icon-material-outline-add"></i>
-                  </button>
-                </div>
-                <div class="keywords-list"><!-- keywords go here --></div>
-                <div class="clearfix"></div>
-              </div>
             </div>
-            <div class="clearfix"></div>
           </div>
         </div>
-        <router-view />
+        <router-view :tags.sync="selectedTags" />
       </div>
     </div>
     <Footer />
@@ -163,13 +125,36 @@
 
 <script>
 import Navbar from "@/components/Navbar";
+import VoerroTagsInput from "@voerro/vue-tagsinput";
 import Footer from "@/components/Footer";
 import { Fragment } from "vue-fragment";
+import "@voerro/vue-tagsinput/dist/style.css";
+
 export default {
   components: {
     Navbar,
+    "tags-input": VoerroTagsInput,
     Footer,
     Fragment,
   },
+  data() {
+    return {
+      tags: [],
+      selectedTags: [],
+    };
+  },
+  mounted() {
+    this.$store.dispatch("getAllTags").then((res) => {
+      res.data.map((tag) => {
+        let refactorTag = {
+          key: tag.id,
+          value: tag.title,
+        };
+        this.tags.push(refactorTag);
+      });
+    });
+  },
 };
 </script>
+
+<style></style>
