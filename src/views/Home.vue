@@ -1,18 +1,26 @@
 <template>
   <fragment>
-    <Header />
+    <HeaderFreelancer v-if="user === 'freelancer'" />
+    <HeaderEmployer v-if="user === 'employer'" />
     <Price />
   </fragment>
 </template>
 <script>
-import Header from "@/components/Header";
+import HeaderEmployer from "@/components/HeaderEmployer";
+import HeaderFreelancer from "@/components/HeaderFreelancer";
 import Price from "@/components/Price";
 import { Fragment } from "vue-fragment";
 export default {
   components: {
     Fragment,
-    Header,
+    HeaderFreelancer,
+    HeaderEmployer,
     Price,
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user.accountType;
+    },
   },
   mounted() {
     if (!document.getElementById("customJs")) {

@@ -267,7 +267,7 @@
                         />
                       </div>
                       <div class="user-name">
-                        <span>Freelancer</span>
+                        <span>{{ user }}</span>
                       </div>
                     </div>
 
@@ -358,6 +358,9 @@ export default {
   computed: {
     loggedIn() {
       return this.$store.getters.loggedIn;
+    },
+    user() {
+      return this.$store.getters.user.name;
     },
     dashboardRoute: function () {
       return ["Dashboard", "JobPost"].includes(this.$route.name)

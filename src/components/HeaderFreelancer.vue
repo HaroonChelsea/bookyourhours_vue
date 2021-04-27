@@ -1,20 +1,21 @@
 <template>
   <div
-    class="intro-banner"
-    data-background-image="/assets/images/home-background.jpg"
+    class="intro-banner dark-overlay"
+    data-background-image="/assets/images/home-background-02.jpg"
   >
+    <div class="transparent-header-spacer"></div>
+
     <div class="container">
       <!-- Intro Headline -->
       <div class="row">
         <div class="col-md-12">
           <div class="banner-headline">
             <h3>
-              <strong>Hire experts or be hired for any job, any time.</strong>
+              <strong>Hire experts freelancers for any job, any time.</strong>
               <br />
               <span
-                >Thousands of small businesses use
-                <strong class="color">Hireo</strong> to turn their ideas into
-                reality.</span
+                >Huge community of designers, developers and creatives ready for
+                your project.</span
               >
             </h3>
           </div>
@@ -43,20 +44,42 @@
             <!-- Search Field -->
             <div class="intro-search-field">
               <label for="intro-keywords" class="field-title ripple-effect"
-                >What job you want?</label
+                >What you need done?</label
               >
               <input
                 id="intro-keywords"
                 type="text"
-                placeholder="Job Title or Keywords"
+                placeholder="e.g. build me a website"
               />
+            </div>
+
+            <!-- Search Field -->
+            <div class="intro-search-field">
+              <select
+                class="selectpicker default"
+                multiple
+                data-selected-text-format="count"
+                data-size="7"
+                title="All Categories"
+              >
+                <option>Admin Support</option>
+                <option>Customer Service</option>
+                <option>Data Analytics</option>
+                <option>Design & Creative</option>
+                <option>Legal</option>
+                <option>Software Developing</option>
+                <option>IT & Networking</option>
+                <option>Writing</option>
+                <option>Translation</option>
+                <option>Sales & Marketing</option>
+              </select>
             </div>
 
             <!-- Button -->
             <div class="intro-search-button">
               <button
                 class="button ripple-effect"
-                onclick="window.location.href='jobs-list-layout-full-page-map.html'"
+                onclick="window.location.href='freelancers-grid-layout-full-page.html'"
               >
                 Search
               </button>
@@ -90,6 +113,6 @@
 
 <script>
 export default {
-  name: "Header",
+  name: "Header_Freelancer",
 };
 </script>
