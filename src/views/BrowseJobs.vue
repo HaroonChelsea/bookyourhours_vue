@@ -1,7 +1,6 @@
 <template>
   <div class="col-xl-9 col-lg-8 content-left-offset">
     <h3 class="page-title">Search Results</h3>
-    {{ tags }}
     <div class="notify-box margin-top-15">
       <div class="switch-container">
         <label class="switch"
