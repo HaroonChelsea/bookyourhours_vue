@@ -16,7 +16,7 @@ export default new Vuex.Store({
       return state.tokens !== null && state.user !== null;
     },
     user(state) {
-      return state.user;
+      return state.user ? state.user : false;
     },
   },
   mutations: {
@@ -49,20 +49,38 @@ export default new Vuex.Store({
         });
       }
     },
-    getAllJobs(vuexContext) {
+    getAllJobs(vuexContext, filter) {
       if (vuexContext.state.tokens) {
         axios.defaults.headers.common["Authorization"] =
           "Bearer " + vuexContext.state.tokens.access.token;
         return new Promise((resolve, reject) => {
-          axios
-            .get("/jobPost")
-            .then((response) => {
-              resolve(response);
-            })
-            .catch((error) => {
-              console.log(error);
-              reject(error);
-            });
+          if (filter) {
+            let filterText;
+            if (filter.asc) {
+              filterText = "?sortBy=asc";
+            }
+            axios
+              .get(`/jobPost${filterText}`)
+              .then((response) => {
+                console.log(response);
+                resolve(response);
+              })
+              .catch((error) => {
+                console.log(error);
+                reject(error);
+              });
+          } else {
+            axios
+              .get("/jobPost")
+              .then((response) => {
+                console.log(response);
+                resolve(response);
+              })
+              .catch((error) => {
+                console.log(error);
+                reject(error);
+              });
+          }
         });
       }
     },
