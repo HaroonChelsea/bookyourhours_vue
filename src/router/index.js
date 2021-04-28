@@ -60,6 +60,11 @@ const routes = [
         name: "ManageJobs",
         component: () => import("@/views/ManageJobs.vue"),
       },
+      {
+        path: "/profile",
+        name: "Profile",
+        component: () => import("@/views/Profile.vue"),
+      },
     ],
     meta: {
       requiresAuth: true,

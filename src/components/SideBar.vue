@@ -95,8 +95,9 @@
 
             <ul data-submenu-title="Account">
               <li>
-                <a href="dashboard-settings.html"
-                  ><i class="icon-material-outline-settings"></i> Settings</a
+                <router-link :to="{ name: 'Profile' }"
+                  ><i class="icon-material-outline-settings"></i>
+                  Settings</router-link
                 >
               </li>
               <li>

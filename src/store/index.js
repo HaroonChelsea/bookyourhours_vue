@@ -32,6 +32,52 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    getUserById(vuexContext, id) {
+      if (vuexContext.state.tokens) {
+        axios.defaults.headers.common["Authorization"] =
+          "Bearer " + vuexContext.state.tokens.access.token;
+        return new Promise((resolve, reject) => {
+          axios
+            .get(`/users/${id}`)
+            .then((response) => {
+              localStorage.removeItem("user");
+              localStorage.setItem("user", JSON.stringify(response.data));
+              vuexContext.commit("setUser", response.data);
+              resolve(response);
+            })
+            .catch((error) => {
+              console.log(error);
+              reject(error);
+            });
+        });
+      }
+    },
+    updateProfile(vuexContext, data) {
+      if (vuexContext.state.tokens) {
+        axios.defaults.headers.common["Authorization"] =
+          "Bearer " + vuexContext.state.tokens.access.token;
+        return new Promise((resolve, reject) => {
+          axios
+            .patch(`/users/${data.id}`, {
+              name: data.name,
+              introduction: data.introduction,
+              tagLine: data.tagLine,
+              nationality: data.nationality,
+              hourlyRate: data.hourlyRate,
+              skills: data.skills,
+              accountType: data.accountType,
+            })
+            .then((response) => {
+              vuexContext.dispatch("getUserById", response.data.id);
+              resolve(response);
+            })
+            .catch((error) => {
+              console.log(error);
+              reject(error);
+            });
+        });
+      }
+    },
     postJob(vuexContext, data) {
       if (vuexContext.state.tokens) {
         axios.defaults.headers.common["Authorization"] =

@@ -553,7 +553,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 @import "~@vueform/slider/themes/default.css";
 
 .slider-connect,
