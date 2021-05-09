@@ -5,7 +5,7 @@
     <div class="dashboard-content-inner">
       <!-- Dashboard Headline -->
       <div class="dashboard-headline">
-        <h3>Howdy, Tom!</h3>
+        <h3>{{ user.name }}!</h3>
         <span>We are glad to see you again!</span>
 
         <!-- Breadcrumbs -->
@@ -21,17 +21,31 @@
       <div class="fun-facts-container">
         <div class="fun-fact" data-fun-fact-color="#36bd78">
           <div class="fun-fact-text">
-            <span>Task Bids Won</span>
-            <h4>22</h4>
+            <span>No of Freelancers</span>
+            <h4 v-if="noOfFreelancer">{{ noOfFreelancer }}</h4>
+            <vue-skeleton-loader
+              v-else
+              :width="100"
+              :height="50"
+              animation="fade"
+              class="mtt"
+            />
           </div>
           <div class="fun-fact-icon">
-            <i class="icon-material-outline-gavel"></i>
+            <i class="icon-feather-users"></i>
           </div>
         </div>
         <div class="fun-fact" data-fun-fact-color="#b81b7f">
           <div class="fun-fact-text">
-            <span>Jobs Applied</span>
-            <h4>4</h4>
+            <span>No of Jobs</span>
+            <h4 v-if="noOfJobs">{{ noOfJobs }}</h4>
+            <vue-skeleton-loader
+              v-else
+              :width="100"
+              :height="50"
+              animation="fade"
+              class="mtt"
+            />
           </div>
           <div class="fun-fact-icon">
             <i class="icon-material-outline-business-center"></i>
@@ -395,9 +409,29 @@
 </template>
 
 <script>
+import VueSkeletonLoader from "skeleton-loader-vue";
+
 export default {
   name: "Dasboard",
+  data() {
+    return {
+      noOfFreelancer: "",
+      noOfJobs: "",
+    };
+  },
+  components: {
+    VueSkeletonLoader,
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    },
+  },
   mounted() {
+    this.$store.dispatch("commonAnalytics").then((res) => {
+      this.noOfFreelancer = res.data.freelancerCount;
+      this.noOfJobs = res.data.jobPostCount;
+    });
     if (!document.getElementById("customJs")) {
       let customScript = document.createElement("script");
       customScript.setAttribute("src", "/assets/js/custom.js");

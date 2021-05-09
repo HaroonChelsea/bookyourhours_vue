@@ -32,6 +32,40 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    commonAnalytics(vuexContext) {
+      if (vuexContext.state.tokens) {
+        axios.defaults.headers.common["Authorization"] =
+          "Bearer " + vuexContext.state.tokens.access.token;
+        return new Promise((resolve, reject) => {
+          axios
+            .get("/common/analytics")
+            .then((response) => {
+              resolve(response);
+            })
+            .catch((error) => {
+              console.log(error);
+              reject(error);
+            });
+        });
+      }
+    },
+    getAllCategories(vuexContext) {
+      if (vuexContext.state.tokens) {
+        axios.defaults.headers.common["Authorization"] =
+          "Bearer " + vuexContext.state.tokens.access.token;
+        return new Promise((resolve, reject) => {
+          axios
+            .get("/category/")
+            .then((response) => {
+              resolve(response);
+            })
+            .catch((error) => {
+              console.log(error);
+              reject(error);
+            });
+        });
+      }
+    },
     getUserById(vuexContext, id) {
       if (vuexContext.state.tokens) {
         axios.defaults.headers.common["Authorization"] =
@@ -112,18 +146,35 @@ export default new Vuex.Store({
         });
       }
     },
+    getTagById(vuexContext, id) {
+      if (vuexContext.state.tokens) {
+        axios.defaults.headers.common["Authorization"] =
+          "Bearer " + vuexContext.state.tokens.access.token;
+        return new Promise((resolve, reject) => {
+          axios
+            .get(`/tag/${id}`)
+            .then((response) => {
+              resolve(response);
+            })
+            .catch((error) => {
+              console.log(error);
+              reject(error);
+            });
+        });
+      }
+    },
     getAllJobs(vuexContext, filter) {
       if (vuexContext.state.tokens) {
         axios.defaults.headers.common["Authorization"] =
           "Bearer " + vuexContext.state.tokens.access.token;
         return new Promise((resolve, reject) => {
           if (filter) {
-            let filterText = "";
-            if (filter.asc) {
-              filterText = "?sortBy=asc";
+            let filterText = "?";
+            if (filter.sortBy === "asc") {
+              filterText += "sortBy=asc";
             }
-            if (filter.desc) {
-              filterText = "?sortBy=desc";
+            if (filter.sortBy === "desc") {
+              filterText += "sortBy=desc";
             }
             if (filter.tags.length > 0) {
               filterText += "&tags=";
@@ -134,6 +185,20 @@ export default new Vuex.Store({
                   filterText += `${el},`;
                 }
               });
+            }
+            if (filter.cats.length > 0) {
+              filterText += "&category=";
+              filter.cats.map((el, i) => {
+                if (filter.tags.length === i + 1) {
+                  filterText += `${el}`;
+                } else {
+                  filterText += `${el},`;
+                }
+              });
+            }
+            if (filter.price.length > 0) {
+              filterText += `&minPrice=${filter.price[0]}`;
+              filterText += `&maxPrice=${filter.price[1]}`;
             }
             axios
               .get(`/jobPost${filterText}`)
@@ -177,7 +242,6 @@ export default new Vuex.Store({
       }
     },
     createBid(vuexContext, data) {
-      console.log(data);
       if (vuexContext.state.tokens) {
         axios.defaults.headers.common["Authorization"] =
           "Bearer " + vuexContext.state.tokens.access.token;
@@ -185,7 +249,6 @@ export default new Vuex.Store({
           axios
             .post("/bid/", data)
             .then((response) => {
-              console.log(response);
               resolve(response);
             })
             .catch((error) => {
@@ -201,13 +264,10 @@ export default new Vuex.Store({
           "Bearer " + vuexContext.state.tokens.access.token;
         return new Promise((resolve, reject) => {
           axios
-            .get("/bid")
+            .get(`/bid?jobPost=${data.id}`)
             .then((response) => {
-              resolve(
-                response.data.results.filter(
-                  (bid) => bid.jobPost.id === data.id
-                )
-              );
+              console.log(response.data.results);
+              resolve(response.data.results);
             })
             .catch((error) => {
               console.log(error);

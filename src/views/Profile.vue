@@ -63,59 +63,13 @@
                     </div>
 
                     <div class="col-xl-6">
-                      <!-- Account Type -->
-                      <div class="submit-field">
-                        <h5>Account Type</h5>
-                        <div class="account-type">
-                          <div>
-                            <input
-                              type="radio"
-                              name="account-type-radio"
-                              id="freelancer-radio"
-                              class="account-type-radio"
-                              v-model="user.accountType"
-                              value="freelancer"
-                            />
-                            <label
-                              for="freelancer-radio"
-                              class="ripple-effect-dark"
-                              ><i
-                                class="icon-material-outline-account-circle"
-                              ></i>
-                              Freelancer</label
-                            >
-                          </div>
-
-                          <div>
-                            <input
-                              type="radio"
-                              name="account-type-radio"
-                              id="employer-radio"
-                              class="account-type-radio"
-                              v-model="user.accountType"
-                              value="employer"
-                            />
-                            <label
-                              for="employer-radio"
-                              class="ripple-effect-dark"
-                              ><i
-                                class="icon-material-outline-business-center"
-                              ></i>
-                              Employer</label
-                            >
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-xl-6">
                       <div class="submit-field">
                         <h5>Email</h5>
                         <input
                           :disabled="isDisabled"
                           type="text"
                           class="with-border"
-                          value="tom@example.com"
+                          v-model="user.email"
                         />
                       </div>
                     </div>
@@ -169,7 +123,7 @@
                           <i
                             class="help-icon"
                             data-tippy-placement="right"
-                            title="Add up to 10 skills"
+                            title="Add up to 5 skills"
                           ></i>
                         </h5>
 
@@ -177,7 +131,9 @@
                         <div class="keywords-container">
                           <div class="keyword-input-container">
                             <tags-input
+                              placeholder="Add a skill"
                               element-id="tags"
+                              :limit="5"
                               :allow-duplicates="false"
                               v-model="selectedTags"
                               :existing-tags="tags"
@@ -185,56 +141,6 @@
                             ></tags-input>
                           </div>
                           <div class="clearfix"></div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-xl-4">
-                      <div class="submit-field">
-                        <h5>Attachments</h5>
-
-                        <!-- Attachments -->
-                        <div
-                          class="attachments-container margin-top-0 margin-bottom-0"
-                        >
-                          <div class="attachment-box ripple-effect">
-                            <span>Cover Letter</span>
-                            <i>PDF</i>
-                            <button
-                              class="remove-attachment"
-                              data-tippy-placement="top"
-                              title="Remove"
-                            ></button>
-                          </div>
-                          <div class="attachment-box ripple-effect">
-                            <span>Contract</span>
-                            <i>DOCX</i>
-                            <button
-                              class="remove-attachment"
-                              data-tippy-placement="top"
-                              title="Remove"
-                            ></button>
-                          </div>
-                        </div>
-                        <div class="clearfix"></div>
-
-                        <!-- Upload Button -->
-                        <div class="uploadButton margin-top-0">
-                          <input
-                            class="uploadButton-input"
-                            type="file"
-                            accept="image/*, application/pdf"
-                            id="upload"
-                            multiple
-                          />
-                          <label
-                            class="uploadButton-button ripple-effect"
-                            for="upload"
-                            >Upload Files</label
-                          >
-                          <span class="uploadButton-file-name"
-                            >Maximum file size: 10 MB</span
-                          >
                         </div>
                       </div>
                     </div>
@@ -437,7 +343,6 @@
             </div>
             <div v-else><i class="icon-feather-plus"></i> Save Changes</div>
           </button>
-          <span class="mtt" v-if="responseUpdate">Updated!!</span>
         </div>
       </div>
       <!-- Row / End -->
@@ -481,11 +386,11 @@
 import Slider from "@vueform/slider/dist/slider.vue2.js";
 import VoerroTagsInput from "@voerro/vue-tagsinput";
 import "@voerro/vue-tagsinput/dist/style.css";
+
 export default {
   components: { Slider, "tags-input": VoerroTagsInput },
   data() {
     return {
-      responseUpdate: false,
       isLoading: false,
       rate: 0,
       user: {},
@@ -518,10 +423,14 @@ export default {
         })
         .then(() => {
           this.isLoading = false;
-          this.responseUpdate = true;
+          this.$toast.open({
+            message: "Profile updated successfully!",
+            type: "success",
+            duration: 2000,
+            dismissible: true,
+          });
           setTimeout(() => {
             this.user = {};
-            this.responseUpdate = false;
             this.user = this.$store.getters.user;
           }, 5000);
         });
@@ -530,8 +439,13 @@ export default {
       this.user = this.$store.getters.user;
       if (this.user.skills.length > 0) {
         this.user.skills.map((skill) => {
-          let refSkill = { key: skill.id, value: skill.title };
-          this.selectedTags.push(refSkill);
+          this.$store.dispatch("getTagById", skill).then((res) => {
+            let refSkill = {
+              key: res.data.id,
+              value: res.data.title,
+            };
+            this.selectedTags.unshift(refSkill);
+          });
         });
       }
       this.rate = this.user.hourlyRate ? this.user.hourlyRate : 15;
@@ -577,45 +491,14 @@ export default {
 .slider-tooltip {
   background: #2a41e8 !important;
 }
-.mtt {
-  margin-top: 20px;
+.slider-horizontal {
+  height: 6px;
+  margin-top: 50px;
 }
 .error {
   color: red;
 }
-.tags-input-badge {
-  position: relative;
-  display: inline-block;
-  padding: 0.25em 0.4em;
-  font-weight: 700;
-  font-size: 0.9rem;
-  line-height: 1;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
-  border-radius: 0.25em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.tags-input-badge-pill {
-  padding: 1rem;
-  border-radius: 3px;
-}
-.tags-input-badge-selected-default {
-  color: #2a41e8;
-  background-color: rgba(42, 65, 232, 0.07);
-}
-.tags-input-remove:before,
-.tags-input-remove:after {
-  content: "";
-  position: absolute;
-  width: 75%;
-  left: 0.15em;
-  background: #2a41e8;
 
-  height: 2px;
-  margin-top: -1px;
-}
 .lds-ring {
   display: inline-block;
   position: relative;
@@ -649,5 +532,155 @@ export default {
   100% {
     transform: rotate(360deg);
   }
+}
+/* The input */
+.tags-input {
+  display: flex;
+  align-items: center;
+}
+
+.tags-input input {
+  min-width: 350px;
+  background: transparent;
+  border: none;
+}
+
+.tags-input input:focus {
+  outline: none;
+}
+
+.tags-input input[type="text"] {
+  color: #495057;
+}
+
+.tags-input-wrapper-default {
+  padding: 0.5em 0.25em;
+  background: #fff;
+  border: 0px solid transparent;
+  border-radius: 0.25em;
+  border-color: #dbdbdb;
+}
+
+.tags-input-wrapper-default.active {
+  border: 1px solid #8bbafe;
+  box-shadow: 0 0 0 0.2em rgba(13, 110, 253, 0.25);
+  outline: 0 none;
+}
+
+/* The tag badges & the remove icon */
+.tags-input span {
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.tags-input-remove {
+  cursor: pointer;
+  position: absolute;
+  display: inline-block;
+  right: 0.3em;
+  top: 0.3em;
+  padding: 0.5em;
+  overflow: hidden;
+}
+
+.tags-input-remove:focus {
+  outline: none;
+}
+
+.tags-input-remove:before,
+.tags-input-remove:after {
+  content: "";
+  position: absolute;
+  width: 75%;
+  left: 0.15em;
+  background: #5dc282;
+
+  height: 2px;
+  margin-top: -1px;
+}
+
+.tags-input-remove:before {
+  transform: rotate(45deg);
+}
+.tags-input-remove:after {
+  transform: rotate(-45deg);
+}
+
+/* Tag badge styles */
+.tags-input-badge {
+  position: relative;
+  display: inline-block;
+  padding: 0.25em 0.4em;
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tags-input-badge-pill {
+  padding: 1rem;
+  border-radius: 3px;
+}
+.tags-input-badge-selected-default {
+  color: #2a41e8;
+  background-color: rgba(42, 65, 232, 0.07);
+}
+.tags-input-remove:before,
+.tags-input-remove:after {
+  content: "";
+  position: absolute;
+  width: 75%;
+  left: 0.15em;
+  background: #2a41e8;
+
+  height: 2px;
+  margin-top: -1px;
+}
+
+/* Typeahead */
+.typeahead-hide-btn {
+  color: #999 !important;
+  font-style: italic;
+}
+
+/* Typeahead - badges */
+.typeahead-badges > span {
+  margin-top: 0.5em;
+}
+
+.typeahead-badges > span {
+  cursor: pointer;
+  padding: 5px;
+  margin-right: 0.3em;
+}
+
+/* Typeahead - dropdown */
+.typeahead-dropdown {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  width: 100%;
+  z-index: 1000;
+}
+
+.typeahead-dropdown li {
+  padding: 0.25em 1em;
+  cursor: pointer;
+}
+
+/* Typeahead elements style/theme */
+.tags-input-typeahead-item-default {
+  color: #2a41e8;
+  background-color: rgba(42, 65, 232, 0.07) !important;
+}
+
+.tags-input-typeahead-item-highlighted-default {
+  color: #fff;
+  background-color: #2a41e8;
 }
 </style>

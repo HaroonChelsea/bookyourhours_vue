@@ -248,7 +248,7 @@
                   <a href="#"
                     ><div class="user-avatar status-online">
                       <img
-                        :src="'https://ui-avatars.com/api/?name=' + user"
+                        :src="'https://ui-avatars.com/api/?name=' + user.name"
                         alt=""
                       /></div
                   ></a>
@@ -262,12 +262,13 @@
                     <div class="user-details">
                       <div class="user-avatar status-online">
                         <img
-                          :src="'https://ui-avatars.com/api/?name=' + user"
+                          :src="'https://ui-avatars.com/api/?name=' + user.name"
                           alt=""
                         />
                       </div>
                       <div class="user-name">
-                        <span>{{ user }}</span>
+                        {{ user.name }}
+                        <span>{{ user.accountType }}</span>
                       </div>
                     </div>
 
@@ -360,7 +361,7 @@ export default {
       return this.$store.getters.loggedIn;
     },
     user() {
-      return this.$store.getters.user.name;
+      return this.$store.getters.user;
     },
     dashboardRoute: function () {
       return ["Dashboard", "JobPost"].includes(this.$route.name)

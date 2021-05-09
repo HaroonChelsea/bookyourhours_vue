@@ -2,33 +2,21 @@
   <div class="col-xl-9 col-lg-8 content-left-offset">
     <h3 class="page-title">Search Results</h3>
     <div class="notify-box margin-top-15">
-      <div class="switch-container">
-        <label class="switch"
-          ><input type="checkbox" /><span class="switch-button"></span
-          ><span class="switch-text"
-            >Turn on email alerts for this search</span
-          ></label
-        >
-      </div>
-
       <div class="sort-by">
         <span>Sort by:</span>
-        <button
-          class="button button-sliding-icon ripple-effect"
-          @click="getAllJobs('asc')"
-        >
-          Ascending
-        </button>
-        <button
-          class="button button-sliding-icon ripple-effect"
-          @click="getAllJobs('desc')"
-        >
-          Desending
-        </button>
+        <select v-model="orderBy" class="selectpicker">
+          <option value="">Select</option>
+          <option value="asc">Ascending</option>
+          <option value="desc">Desending</option>
+        </select>
       </div>
     </div>
 
     <!-- Tasks Container -->
+    <div v-if="showAlert" class="notification error closeable">
+      <p>Nothing found!</p>
+      <a class="close" href="#"></a>
+    </div>
     <div v-if="jobs" class="tasks-list-container compact-list margin-top-35">
       <!-- Task -->
       <router-link
@@ -84,68 +72,63 @@
       </div>
     </div>
     <!-- Tasks Container / End -->
-
-    <!-- Pagination -->
-    <div class="clearfix"></div>
-    <div class="row">
-      <div class="col-md-12">
-        <!-- Pagination -->
-        <div class="pagination-container margin-top-60 margin-bottom-60">
-          <nav class="pagination">
-            <ul>
-              <li class="pagination-arrow">
-                <a href="#" class="ripple-effect"
-                  ><i class="icon-material-outline-keyboard-arrow-left"></i
-                ></a>
-              </li>
-              <li><a href="#" class="ripple-effect">1</a></li>
-              <li><a href="#" class="current-page ripple-effect">2</a></li>
-              <li><a href="#" class="ripple-effect">3</a></li>
-              <li><a href="#" class="ripple-effect">4</a></li>
-              <li class="pagination-arrow">
-                <a href="#" class="ripple-effect"
-                  ><i class="icon-material-outline-keyboard-arrow-right"></i
-                ></a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-    </div>
-    <!-- Pagination / End -->
   </div>
 </template>
 
 <script>
-// import VueTagsInput from "@johmun/vue-tags-input";
-
 export default {
-  props: ["tags"],
+  props: ["tags", "value", "price"],
   data() {
     return {
+      orderBy: "",
+      filterPrice: [],
       filterTags: [],
+      filterCats: [],
+      showAlert: false,
       jobs: null,
     };
   },
   watch: {
+    price: function (newPrice) {
+      this.filterPrice = [...newPrice];
+      this.getAllJobs();
+    },
     tags: function (newTags) {
       this.filterTags = [];
       newTags.map((tag) => {
         this.filterTags.push(tag.key);
       });
-      this.getAllJobs("asc");
+      this.getAllJobs();
+    },
+    value: function (newCat) {
+      this.filterCats = [];
+      newCat.map((cat) => {
+        this.filterCats.push(cat.id);
+      });
+      this.getAllJobs();
+    },
+    orderBy: function () {
+      this.getAllJobs();
     },
   },
   methods: {
-    getAllJobs(sortBy) {
+    getAllJobs() {
+      this.showAlert = false;
       this.jobs = null;
       this.$store
         .dispatch("getAllJobs", {
-          [sortBy]: true,
+          sortBy: this.orderBy,
           tags: this.filterTags,
+          cats: this.filterCats,
+          price: this.filterPrice,
         })
         .then((res) => {
           this.jobs = res.data.results;
+          if (this.jobs.length > 0) {
+            this.showAlert = false;
+          } else {
+            this.showAlert = true;
+          }
         });
     },
   },
@@ -159,12 +142,15 @@ export default {
     },
   },
   mounted() {
-    this.getAllJobs("asc");
+    this.getAllJobs();
   },
 };
 </script>
 
 <style scoped>
+.notification {
+  margin-top: 30px;
+}
 .lds-ring {
   display: inline-block;
   position: relative;

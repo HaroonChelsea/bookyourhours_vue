@@ -130,7 +130,7 @@
 
           <!-- Skills -->
           <div class="single-page-section">
-            <h3>Skills Required</h3>
+            <h3>Skills and Expertise</h3>
             <div v-if="job.tags" class="task-tags">
               <span v-for="tag in job.tags" :key="tag.id">{{ tag.title }}</span>
             </div>
@@ -159,7 +159,6 @@
             </div>
           </div>
           <div class="clearfix"></div>
-
           <!-- Freelancers Bidding -->
           <div class="boxed-list margin-bottom-60">
             <div class="boxed-list-headline">
@@ -263,25 +262,29 @@
                   <div class="mtt">
                     <input v-model="price" type="number" class="with-border" />
                   </div>
-                  <div class="bidding-fields">
-                    <div class="bidding-field">
-                      <!-- Quantity Buttons -->
-                      <div class="qtyButtons">
-                        <button
-                          @click="days > 1 ? days-- : (days = 1)"
-                          class="qtyDec"
-                        ></button>
-                        <input type="text" name="qtyInput" v-model="days" />
-                        <button @click="days++" class="qtyInc"></button>
-                      </div>
+                  <div>
+                    <div
+                      class="section-headline margin-top-25 margin-bottom-12"
+                    >
+                      <h5>How long will this project take?</h5>
                     </div>
-                    <div class="bidding-field">
-                      <select v-model="selected" class="selectpicker default">
-                        <option value="hours">Hours</option>
-                        <option value="days">Days</option>
-                        <option value="months">Months</option>
-                      </select>
-                    </div>
+
+                    <select v-model="time" class="selectpicker">
+                      <option value="Select project length">
+                        Select project length
+                      </option>
+                      <option value="More than 6 months">
+                        More than 6 months
+                      </option>
+                      <option value="3 to 6 months">3 to 6 months</option>
+                      <option value="1 to 3 months">1 to 3 months</option>
+                      <option value="Less than 1 month">
+                        Less than 1 month
+                      </option>
+                    </select>
+                    <small v-if="error.time.status" class="error">
+                      {{ error.time.message }}
+                    </small>
                   </div>
                   <!-- Headline -->
                   <div class="submit-field mtt">
@@ -410,15 +413,15 @@
 import { Fragment } from "vue-fragment";
 import Slider from "@vueform/slider/dist/slider.vue2.js";
 import VueSkeletonLoader from "skeleton-loader-vue";
+import "@vueform/slider/themes/default.css";
 
 export default {
   data() {
     return {
       bids: [],
       isLoading: false,
-      selected: "days",
+      time: "Select project length",
       description: "",
-      days: 1,
       price: 20,
       job: {},
       success: {
@@ -426,7 +429,7 @@ export default {
         message: "Added successfully!",
       },
       error: {
-        selected: {
+        time: {
           status: false,
           message: "",
         },
@@ -457,7 +460,7 @@ export default {
         this.isLoading = true;
         this.$store
           .dispatch("createBid", {
-            time: this.days + " " + this.selected,
+            time: this.time,
             price: this.price,
             currency: "USD",
             jobType: this.job.jobType,
@@ -465,9 +468,8 @@ export default {
             description: this.description,
           })
           .then(() => {
-            this.selected = "days";
             this.description = "";
-            this.days = 1;
+            this.time = "Select project length";
             this.price = 20;
             this.isLoading = false;
             this.success.status = true;
@@ -490,10 +492,10 @@ export default {
       }
     },
     validateBid() {
-      if (this.description && this.days && this.price && this.selected) {
-        if (["days", "months", "hours"].includes(this.selected)) {
-          this.error.selected.status = true;
-          this.error.selected.message = "Invalid time!";
+      if (this.description && this.time && this.price) {
+        if (this.time === "Select project length") {
+          this.error.time.status = true;
+          this.error.time.message = "Invalid time!";
         }
 
         if (!this.price || this.price <= 0) {
@@ -501,26 +503,29 @@ export default {
           this.error.price.message = "Price is required!";
           return false;
         }
-        if (this.days <= 0) {
-          this.error.days.status = true;
-          this.error.days.message = "Invalid time!";
+        if (this.time === "Select project length") {
+          this.error.time.status = true;
+          this.error.time.message = "Invalid time!";
           return false;
         }
-        this.error.days.status = false;
+        this.error.time.status = false;
         this.error.description.status = false;
         this.error.price.status = false;
-        this.error.selected.status = false;
         return true;
       }
       if (!this.description) {
         this.error.description.status = true;
         this.error.description.message = "Description is required!";
       }
+      if (this.time === "Select project length") {
+        this.error.time.status = true;
+        this.error.time.message = "Invalid time!";
+      }
+
       setTimeout(() => {
-        this.error.days.status = false;
+        this.error.time.status = false;
         this.error.description.status = false;
         this.error.price.status = false;
-        this.error.selected.status = false;
       }, 5000);
     },
   },
@@ -553,18 +558,18 @@ export default {
   },
 };
 </script>
-<style scoped>
-@import "~@vueform/slider/themes/default.css";
-
+<style>
 .slider-connect,
 .slider-base {
-  background: #2a41e8;
+  background: #2a41e8 !important;
 }
 .slider-tooltip {
-  background: #2a41e8;
+  background: #2a41e8 !important;
 }
-.mtt {
-  margin-top: 20px;
+.slider-horizontal {
+  height: 6px;
+  margin-top: 50px;
+  margin-bottom: 20px;
 }
 .error {
   color: red;
