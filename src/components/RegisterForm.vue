@@ -36,7 +36,7 @@
           v-model="accountType"
         />
         <label for="employer-radio" class="ripple-effect-dark"
-          ><i class="icon-material-outline-business-center"></i> Employer</label
+          ><i class="icon-material-outline-business-center"></i>Client</label
         >
       </div>
     </div>

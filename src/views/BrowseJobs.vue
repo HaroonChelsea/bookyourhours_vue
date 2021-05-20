@@ -1,6 +1,6 @@
 <template>
   <div class="col-xl-9 col-lg-8 content-left-offset">
-    <h3 class="page-title">Search Results</h3>
+    <!-- <h3 class="page-title">Search Results</h3>
     <div class="notify-box margin-top-15">
       <div class="sort-by">
         <span>Sort by:</span>
@@ -10,7 +10,7 @@
           <option value="desc">Desending</option>
         </select>
       </div>
-    </div>
+    </div> -->
 
     <!-- Tasks Container -->
     <div v-if="showAlert" class="notification error closeable">
@@ -142,6 +142,15 @@ export default {
     },
   },
   mounted() {
+    let data = this.$route.params.data;
+    if (data) {
+      if (data.tags) {
+        data.tags.map((t) => this.tags.push(t));
+      }
+      if (data.cats) {
+        this.$emit("update", data.cats);
+      }
+    }
     this.getAllJobs();
   },
 };

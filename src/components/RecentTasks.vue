@@ -6,9 +6,9 @@
         <div class="col-xl-12">
           <!-- Section Headline -->
           <div class="section-headline margin-top-0 margin-bottom-35">
-            <h3>Recent Tasks</h3>
+            <h3>Recent Jobs</h3>
             <router-link class="headline-link" :to="{ name: 'BrowseJobs' }"
-              >Browse All Tasks</router-link
+              >Browse All jobs</router-link
             >
           </div>
 
@@ -102,14 +102,9 @@ export default {
     },
   },
   mounted() {
-    this.$store
-      .dispatch("getAllJobs", {
-        asc: true,
-        tags: [],
-      })
-      .then((res) => {
-        this.jobs = res.data.results;
-      });
+    this.$store.dispatch("getAllJobs").then((res) => {
+      this.jobs = res.data.results;
+    });
   },
 };
 </script>

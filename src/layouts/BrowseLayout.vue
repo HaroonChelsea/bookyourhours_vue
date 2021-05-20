@@ -1,6 +1,7 @@
 <template>
   <fragment>
     <Navbar />
+
     <div class="margin-top-90"></div>
     <div class="margin-top-90"></div>
     <div class="container">
@@ -74,6 +75,7 @@
           :tags.sync="selectedTags"
           :value.sync="value"
           :price.sync="sendPrice"
+          @update="getCats"
         />
       </div>
     </div>
@@ -84,19 +86,19 @@
 
 <script>
 import Navbar from "@/components/Navbar";
-import VoerroTagsInput from "@voerro/vue-tagsinput";
 import Footer from "@/components/Footer";
 import Slider from "@vueform/slider/dist/slider.vue2.js";
 import { Fragment } from "vue-fragment";
+import VoerroTagsInput from "@voerro/vue-tagsinput";
 import "@voerro/vue-tagsinput/dist/style.css";
 import Multiselect from "vue-multiselect/src/Multiselect";
 
 export default {
   components: {
     Navbar,
-    "tags-input": VoerroTagsInput,
     Footer,
     Fragment,
+    "tags-input": VoerroTagsInput,
     Multiselect,
     Slider,
   },
@@ -119,6 +121,9 @@ export default {
   methods: {
     searchByPrice() {
       this.sendPrice = [...this.price];
+    },
+    getCats(searchCats) {
+      this.value = searchCats;
     },
   },
   mounted() {

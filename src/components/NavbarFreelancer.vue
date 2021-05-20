@@ -25,11 +25,11 @@
                 <!-- <li> -->
                 <!-- <a>Find Work</a> -->
                 <!-- <ul class="dropdown-nav"> -->
-                <!-- <li>
+                <li>
                   <router-link :to="{ name: 'BrowseJobs' }"
                     >Browse Jobs</router-link
                   >
-                </li> -->
+                </li>
                 <!-- </ul>
                 </li> -->
 

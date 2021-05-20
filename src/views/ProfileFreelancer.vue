@@ -81,74 +81,74 @@
         </div>
 
         <!-- Dashboard Box -->
-        <!-- <div class="col-xl-12">
-          <div class="dashboard-box"> -->
-        <!-- Headline -->
-        <!-- <div class="headline">
+        <div class="col-xl-12">
+          <div class="dashboard-box">
+            <!-- Headline -->
+            <div class="headline">
               <h3><i class="icon-material-outline-face"></i> My Profile</h3>
-            </div> -->
-        <!-- end -->
-        <!-- <div class="content"> -->
-        <!-- <ul class="fields-ul"> -->
-        <!-- <li> -->
-        <!-- <div class="row">
-                  <div class="col-xl-4"> -->
-        <!-- <div class="submit-field"> -->
-        <!-- <div class="bidding-widget"> -->
-        <!-- Headline -->
-        <!-- <span class="bidding-detail"
-                            >Set your <strong>minimal hourly rate</strong></span
-                          > -->
+            </div>
 
-        <!-- Slider -->
-        <!-- <div class="bidding-value">
+            <div class="content">
+              <ul class="fields-ul">
+                <li>
+                  <div class="row">
+                    <div class="col-xl-4">
+                      <div class="submit-field">
+                        <div class="bidding-widget">
+                          <!-- Headline -->
+                          <span class="bidding-detail"
+                            >Set your <strong>minimal hourly rate</strong></span
+                          >
+
+                          <!-- Slider -->
+                          <div class="bidding-value">
                             $<span id="biddingVal">{{ rate }}</span>
-                          </div> -->
-        <Slider :max="1000" v-model="rate" />
-        <!-- <div class="mtt">
+                          </div>
+                          <Slider :max="1000" v-model="rate" />
+                          <div class="mtt">
                             <input
                               v-model="rate"
                               type="number"
                               class="with-border"
                             />
-                          </div> -->
-        <!-- </div> -->
-        <!-- </div>
-                </div> -->
-        <!-- 
-              <div class="col-xl-4">
-                <div class="submit-field"> -->
-        <!-- <h5>
-                      Skills
-                      <i
-                        class="help-icon"
-                        data-tippy-placement="right"
-                        title="Add up to 5 skills"
-                      ></i>
-                    </h5> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
-        <!-- Skills List -->
-        <!-- <div class="keywords-container">
-                      <div class="keyword-input-container"> -->
-        <tags-input
-          placeholder="Add a skill"
-          element-id="tags"
-          :limit="5"
-          :allow-duplicates="false"
-          v-model="selectedTags"
-          :existing-tags="tags"
-          :typeahead="true"
-        ></tags-input>
-        <!-- </div> -->
-        <!-- <div class="clearfix"></div>
-                    </div> -->
-        <!-- </div> -->
-        <!-- </div> -->
-        <!-- </div> -->
-        <!-- </li> -->
-        <!-- <li> -->
-        <!-- <div class="row"> -->
-        <!-- <div class="col-xl-6">
+                    <div class="col-xl-4">
+                      <div class="submit-field">
+                        <h5>
+                          Skills
+                          <i
+                            class="help-icon"
+                            data-tippy-placement="right"
+                            title="Add up to 5 skills"
+                          ></i>
+                        </h5>
+
+                        <!-- Skills List -->
+                        <div class="keywords-container">
+                          <div class="keyword-input-container">
+                            <tags-input
+                              placeholder="Add a skill"
+                              element-id="tags"
+                              :limit="5"
+                              :allow-duplicates="false"
+                              v-model="selectedTags"
+                              :existing-tags="tags"
+                              :typeahead="true"
+                            ></tags-input>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="row">
+                    <div class="col-xl-6">
                       <div class="submit-field">
                         <h5>Tagline</h5>
                         <input
@@ -158,8 +158,8 @@
                           v-model="user.tagLine"
                         />
                       </div>
-                    </div> -->
-        <!-- 
+                    </div>
+
                     <div class="col-xl-6">
                       <div class="submit-field">
                         <h5>Nationality</h5>
@@ -262,9 +262,9 @@
                           <option value="Zimbabwe">Zimbabwe</option>
                         </select>
                       </div>
-                    </div> -->
+                    </div>
 
-        <!-- <div class="col-xl-12">
+                    <div class="col-xl-12">
                       <div class="submit-field">
                         <h5>Introduce Yourself</h5>
                         <textarea
@@ -274,13 +274,13 @@
                           class="with-border"
                         ></textarea>
                       </div>
-                    </div> -->
-        <!-- </div> -->
-        <!-- </li> -->
-        <!-- </ul> -->
-        <!-- </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div> -->
+        </div>
 
         <!-- Dashboard Box -->
         <div class="col-xl-12">
@@ -351,7 +351,7 @@
       <div class="dashboard-footer-spacer"></div>
       <div class="small-footer margin-top-15">
         <div class="small-footer-copyrights">
-          © 2021 <strong>bookyourhours</strong>. All Rights Reserved.
+          © 2019 <strong>Hireo</strong>. All Rights Reserved.
         </div>
         <ul class="footer-social-links">
           <li>

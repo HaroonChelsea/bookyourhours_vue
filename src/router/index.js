@@ -80,9 +80,6 @@ const routes = [
         component: () => import("@/views/BrowseJobs.vue"),
       },
     ],
-    meta: {
-      requiresAuth: true,
-    },
   },
 
   {

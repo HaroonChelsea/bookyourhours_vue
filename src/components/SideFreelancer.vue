@@ -24,13 +24,14 @@
                   Dashboard</router-link
                 >
               </li>
-              <!-- <li>
+            </ul>
+            <!-- <li>
                 <a href="dashboard-messages.html"
                   ><i class="icon-material-outline-question-answer"></i>
                   Messages <span class="nav-tag">2</span></a
                 >
               </li> -->
-              <!-- <li>
+            <!-- <li>
                 <a href="dashboard-bookmarks.html"
                   ><i class="icon-material-outline-star-border"></i>
                   Bookmarks</a
@@ -41,10 +42,9 @@
                   ><i class="icon-material-outline-rate-review"></i> Reviews</a
                 >
               </li> -->
-            </ul>
 
             <!-- <ul data-submenu-title="Organize and Manage"> -->
-            <li
+            <!-- <li
               :class="`${
                 ['JobPost'].includes(this.$route.name) ? 'active-submenu' : ''
               }`"
@@ -58,19 +58,19 @@
                   <router-link :to="{ name: 'ManageJobs' }"
                     >Manage Jobs <span class="nav-tag">3</span></router-link
                   >
-                </li>
-                <!-- <li>
+                </li> -->
+            <!-- <li>
                   <a href="dashboard-manage-candidates.html"
                     >Manage Candidates</a
                   >
                 </li> -->
-                <li>
+            <!-- <li>
                   <router-link :to="{ name: 'JobPost' }"
                     >Post a Job</router-link
                   >
                 </li>
               </ul>
-            </li>
+            </li> -->
             <!-- <li>
               <a href="#"
                 ><i class="icon-material-outline-assignment"></i> Tasks</a
@@ -119,7 +119,7 @@
 
 <script>
 export default {
-  name: "SideBar",
+  name: "SideFreelancer",
 };
 </script>
 

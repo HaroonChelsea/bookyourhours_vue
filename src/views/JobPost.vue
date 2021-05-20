@@ -90,7 +90,7 @@
                   </div>
                 </div>
 
-                <div class="col-xl-4">
+                <div class="col-xl-6">
                   <div class="submit-field">
                     <h5>
                       Tags
@@ -119,7 +119,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-xl-4">
+                <!-- <div class="col-xl-4">
                   <div class="submit-field">
                     <h5>
                       Add Questions?
@@ -148,7 +148,7 @@
                       <div class="clearfix"></div>
                     </div>
                   </div>
-                </div>
+                </div> -->
                 <div class="col">
                   <div class="submit-field">
                     <h5>Time Required</h5>
@@ -264,7 +264,7 @@
       <div class="dashboard-footer-spacer"></div>
       <div class="small-footer margin-top-15">
         <div class="small-footer-copyrights">
-          © 2019 <strong>Hireo</strong>. All Rights Reserved.
+          © 2021 <strong>bookyourhours</strong>. All Rights Reserved.
         </div>
         <ul class="footer-social-links">
           <li>

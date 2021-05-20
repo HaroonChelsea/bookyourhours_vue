@@ -49,22 +49,22 @@ export default new Vuex.Store({
         });
       }
     },
-    getAllCategories(vuexContext) {
-      if (vuexContext.state.tokens) {
-        axios.defaults.headers.common["Authorization"] =
-          "Bearer " + vuexContext.state.tokens.access.token;
-        return new Promise((resolve, reject) => {
-          axios
-            .get("/category/")
-            .then((response) => {
-              resolve(response);
-            })
-            .catch((error) => {
-              console.log(error);
-              reject(error);
-            });
-        });
-      }
+    getAllCategories() {
+      // if (vuexContext.state.tokens) {
+      //   axios.defaults.headers.common["Authorization"] =
+      //     "Bearer " + vuexContext.state.tokens.access.token;
+      // }
+      return new Promise((resolve, reject) => {
+        axios
+          .get("/category/")
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((error) => {
+            console.log(error);
+            reject(error);
+          });
+      });
     },
     getUserById(vuexContext, id) {
       if (vuexContext.state.tokens) {
@@ -129,22 +129,22 @@ export default new Vuex.Store({
         });
       }
     },
-    getAllTags(vuexContext) {
-      if (vuexContext.state.tokens) {
-        axios.defaults.headers.common["Authorization"] =
-          "Bearer " + vuexContext.state.tokens.access.token;
-        return new Promise((resolve, reject) => {
-          axios
-            .get("/tag")
-            .then((response) => {
-              resolve(response);
-            })
-            .catch((error) => {
-              console.log(error);
-              reject(error);
-            });
-        });
-      }
+    getAllTags() {
+      // if (vuexContext.state.tokens) {
+      //   axios.defaults.headers.common["Authorization"] =
+      //     "Bearer " + vuexContext.state.tokens.access.token;
+      // }
+      return new Promise((resolve, reject) => {
+        axios
+          .get("/tag")
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((error) => {
+            console.log(error);
+            reject(error);
+          });
+      });
     },
     getTagById(vuexContext, id) {
       if (vuexContext.state.tokens) {
@@ -164,65 +164,64 @@ export default new Vuex.Store({
       }
     },
     getAllJobs(vuexContext, filter) {
-      if (vuexContext.state.tokens) {
-        axios.defaults.headers.common["Authorization"] =
-          "Bearer " + vuexContext.state.tokens.access.token;
-        return new Promise((resolve, reject) => {
-          if (filter) {
-            let filterText = "?";
-            if (filter.sortBy === "asc") {
-              filterText += "sortBy=asc";
-            }
-            if (filter.sortBy === "desc") {
-              filterText += "sortBy=desc";
-            }
-            if (filter.tags.length > 0) {
-              filterText += "&tags=";
-              filter.tags.map((el, i) => {
-                if (filter.tags.length === i + 1) {
-                  filterText += `${el}`;
-                } else {
-                  filterText += `${el},`;
-                }
-              });
-            }
-            if (filter.cats.length > 0) {
-              filterText += "&category=";
-              filter.cats.map((el, i) => {
-                if (filter.tags.length === i + 1) {
-                  filterText += `${el}`;
-                } else {
-                  filterText += `${el},`;
-                }
-              });
-            }
-            if (filter.price.length > 0) {
-              filterText += `&minPrice=${filter.price[0]}`;
-              filterText += `&maxPrice=${filter.price[1]}`;
-            }
-            axios
-              .get(`/jobPost${filterText}`)
-              .then((response) => {
-                resolve(response);
-              })
-              .catch((error) => {
-                console.log(error);
-                reject(error);
-              });
-          } else {
-            axios
-              .get("/jobPost")
-              .then((response) => {
-                console.log(response);
-                resolve(response);
-              })
-              .catch((error) => {
-                console.log(error);
-                reject(error);
-              });
+      // if (vuexContext.state.tokens) {
+      //   axios.defaults.headers.common["Authorization"] =
+      //     "Bearer " + vuexContext.state.tokens.access.token;
+      // }
+      return new Promise((resolve, reject) => {
+        if (filter) {
+          let filterText = "?";
+          if (filter.sortBy === "asc") {
+            filterText += "sortBy=asc";
           }
-        });
-      }
+          if (filter.sortBy === "desc") {
+            filterText += "sortBy=desc";
+          }
+          if (filter.tags.length > 0) {
+            filterText += "&tags=";
+            filter.tags.map((el, i) => {
+              if (filter.tags.length === i + 1) {
+                filterText += `${el}`;
+              } else {
+                filterText += `${el},`;
+              }
+            });
+          }
+          if (filter.cats.length > 0) {
+            filterText += "&category=";
+            filter.cats.map((el, i) => {
+              if (filter.tags.length === i + 1) {
+                filterText += `${el}`;
+              } else {
+                filterText += `${el},`;
+              }
+            });
+          }
+          if (filter.price.length > 0) {
+            filterText += `&minPrice=${filter.price[0]}`;
+            filterText += `&maxPrice=${filter.price[1]}`;
+          }
+          axios
+            .get(`/jobPost${filterText}`)
+            .then((response) => {
+              resolve(response);
+            })
+            .catch((error) => {
+              console.log(error);
+              reject(error);
+            });
+        } else {
+          axios
+            .get("/jobPost")
+            .then((response) => {
+              resolve(response);
+            })
+            .catch((error) => {
+              console.log(error);
+              reject(error);
+            });
+        }
+      });
     },
     getAJob(vuexContext, data) {
       if (vuexContext.state.tokens) {
@@ -266,7 +265,6 @@ export default new Vuex.Store({
           axios
             .get(`/bid?jobPost=${data.id}`)
             .then((response) => {
-              console.log(response.data.results);
               resolve(response.data.results);
             })
             .catch((error) => {

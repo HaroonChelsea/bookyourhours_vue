@@ -103,9 +103,12 @@
               <h3>For Candidates</h3>
               <ul>
                 <li>
-                  <a href="#"><span>Browse Jobs</span></a>
+                  <!-- <a href="#"><span>Browse Jobs</span></a> -->
+                  <router-link :to="{ name: 'BrowseJobs' }"
+                    >Browse Jobs</router-link
+                  >
                 </li>
-                <li>
+                <!-- <li>
                   <a href="#"><span>Add Resume</span></a>
                 </li>
                 <li>
@@ -113,7 +116,7 @@
                 </li>
                 <li>
                   <a href="#"><span>My Bookmarks</span></a>
-                </li>
+                </li> -->
               </ul>
             </div>
           </div>
@@ -123,24 +126,25 @@
             <div class="footer-links">
               <h3>For Employers</h3>
               <ul>
-                <li>
+                <!-- <li>
                   <a href="#"><span>Browse Candidates</span></a>
-                </li>
+                </li> -->
                 <li>
-                  <a href="#"><span>Post a Job</span></a>
+                  <!-- <a href="#"><span>Post a Job</span></a> -->
+                  <router-link :to="{ name: 'JobPost' }">Jobpost</router-link>
                 </li>
-                <li>
+                <!-- <li>
                   <a href="#"><span>Post a Task</span></a>
-                </li>
-                <li>
+                </li> -->
+                <!-- <li>
                   <a href="#"><span>Plans & Pricing</span></a>
-                </li>
+                </li> -->
               </ul>
             </div>
           </div>
 
           <!-- Links -->
-          <div class="col-xl-2 col-lg-2 col-md-3">
+          <!-- <div class="col-xl-2 col-lg-2 col-md-3">
             <div class="footer-links">
               <h3>Helpful Links</h3>
               <ul>
@@ -155,7 +159,7 @@
                 </li>
               </ul>
             </div>
-          </div>
+          </div> -->
 
           <!-- Links -->
           <div class="col-xl-2 col-lg-2 col-md-3">
@@ -163,11 +167,12 @@
               <h3>Account</h3>
               <ul>
                 <li>
-                  <a href="#"><span>Log In</span></a>
+                  <!-- <a href="#"><span>Log In</span></a> -->
+                  <router-link :to="{ name: 'Login' }">Log In</router-link>
                 </li>
-                <li>
+                <!-- <li>
                   <a href="#"><span>My Account</span></a>
-                </li>
+                </li> -->
               </ul>
             </div>
           </div>
@@ -200,7 +205,7 @@
       <div class="container">
         <div class="row">
           <div class="col-xl-12">
-            © 2019 <strong>Hireo</strong>. All Rights Reserved.
+            © 2020 <strong>bookyourhours</strong>. All Rights Reserved.
           </div>
         </div>
       </div>
